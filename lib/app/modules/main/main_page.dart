@@ -16,13 +16,10 @@ class MainPage extends BasePage<MainController> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {
-          controller.nowSelectIndex.value = index;
-          controller.pageController.jumpToPage(index);
-        },
+        onTap: () => controller.changeTab(index),
         child: SizedBox(
           width: 36.dp,
-          height: 24.dp,
+          height: 16.dp,
           child: Obx(() => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -34,11 +31,11 @@ class MainPage extends BasePage<MainController> {
                             ? Colors.white
                             : Colors.blue),
                   ),
-                  index == controller.nowSelectIndex.value
-                      ? Container(width: 26.dp, height: 1.dp, color: Colors.red)
-                      : SizedBox(
-                          height: 1.dp,
-                        )
+                  // index == controller.nowSelectIndex.value
+                  //     ? Container(width: 26.dp, height: 1.dp, color: Colors.red)
+                  //     : SizedBox(
+                  //         height: 1.dp,
+                  //       )
                 ],
               )),
         ),
@@ -54,10 +51,29 @@ class MainPage extends BasePage<MainController> {
     return Padding(
       padding:
           EdgeInsets.only(left: 18.dp, right: 18.dp, top: 2.dp, bottom: 2.dp),
-      child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: list),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: list),
+          AnimatedBuilder(
+              animation: controller.animationController,
+              builder: (context, child) {
+                return Transform.translate(
+                    offset: Offset(controller.nowPosition + controller.offsetPosition * controller.animationController.value, 0),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: (controller.titles.length - 1) * 36.dp),
+                      child: Container(
+                          width: 26.dp,
+                          height: 1.dp,
+                          color: Colors.red,
+                          margin: EdgeInsets.only(left: 5.dp, right: 5.dp)),
+                    ));
+              })
+        ],
+      ),
     );
   }
 
@@ -74,9 +90,6 @@ class MainPage extends BasePage<MainController> {
             child: PageView(
           controller: controller.pageController,
           physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (index) {
-            controller.nowSelectIndex.value = index;
-          },
           children: const [
             HomePage(),
             AboutPage(),
