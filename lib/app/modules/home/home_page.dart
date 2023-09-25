@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingluo_web/app/common/base_page.dart';
-import 'package:jingluo_web/app/modules/splash/splash_controller.dart';
 import 'package:jingluo_web/app/theme/utils/export.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomePage extends BasePage<SplashController> {
+class HomePage extends BasePage {
   const HomePage({super.key});
 
   List<Widget> _buildIconList() {

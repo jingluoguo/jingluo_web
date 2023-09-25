@@ -1,5 +1,6 @@
 /// 第三方
 import 'package:get/get.dart';
+import 'package:jingluo_web/app/modules/about/about_controller.dart';
 import 'package:jingluo_web/app/modules/articles/articles_controller.dart';
 import 'package:jingluo_web/app/modules/home/home_controller.dart';
 
@@ -12,5 +13,6 @@ class MainBinding implements Bindings {
     Get.put(MainController());
     Get.put(HomeController());
     Get.put(ArticlesController());
+    Get.put(AboutController());
   }
 }
